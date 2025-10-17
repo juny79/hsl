@@ -19,64 +19,72 @@
  / inventory/ipam.csv
 
 🗺️ 네트워크 한눈에 보기
+2.1 전체 네트워크 구성도
 
-전체 네트워크 구성도 (통합감시실 + 15개 통신실 기준)
+통합감시실 + 15개 통신실 기준
 
 <img src="diagrams/전체네트워크구성도.png" alt="전체 네트워크 구성도" width="100%"/>
+2.2 통합감시실 네트워크 구성도
 
-통합감시실 네트워크 구성도 (서버역할별 VLAN 분리 + 백본 이중화)
+서버 역할별 VLAN 분리 + 백본 이중화
 
 <img src="diagrams/통합감시실-네트워크-구성도.png" alt="통합감시실 네트워크 구성도" width="100%"/>
 🧩 VLAN / 서브넷 요약
+3.1 주소계획(도면 기준 예시)
 
-실제 주소는 inventory/ipam.csv와 장비 설정을 정본으로 유지합니다. 아래는 도면 기준 요약(예시).
+실제 값은 inventory/ipam.csv와 장비 설정을 정본으로 유지
 
-VLAN	용도	주소/마스크 (예)	게이트웨이(예)	비고
+VLAN	용도	주소/마스크	게이트웨이(예)	비고
 VLAN10	서버 존 (MAIN/DB/MEDIA/EMS/NMS/WEB)	10.145.91.0/26	10.145.91.1 (VRRP VIP)	핵심 서버 세그먼트
 VLAN20	Display/콘솔	10.145.91.64/26	10.145.91.65 (VRRP VIP)	대형월·운영단말
 VLAN30	코어/P2P 링크	다수의 /29 블록	코어–L3–FW–BB 링크	이중 경로
+3.2 라우팅/이중화(요약)
 
-🔐 라우팅/이중화: 코어(이중)에서 VLAN IF 보유 + VRRP 제공 → L3/FW/BB는 /29 P2P로 상호 연결, 장애 시 우회 경로 확보.
+코어(이중)에서 VLAN IF 보유 + VRRP 제공
 
-🖥️ 서버·스토리지·SAN 한눈정리
+코어–L3–FW–백본 라우터는 /29 P2P 링크로 상호 연결
+
+관제실(광명/구로)은 전용 구간으로 분리, 최소 포트 허용 정책
+
+🖥️ 서버 · 스토리지 · SAN
+4.1 구성 요약
 영역	구성	핵심 포인트
 서버	HP DL580 G3 / DL360 G4p	Win2003(Std/Ent), MSCS(Ent)
 스토리지	HP EVA8000	FATA 500GB×168 → DiskGroup×2, VRAID5, Spare=single
 SAN	StorageWorks 2/16V ×2	듀얼 패브릭, Single-Initiator Zoning 권장
 클러스터	MEDIA(1,2)=Cluster1 / (3,4)=Cluster2	분기 1회 페일오버 리허설
+4.2 상세 문서
 
-📎 자세히: docs/storage/eva-overview.md
-, docs/storage/zoning-policy.md
-, docs/cluster/mscs-cluster.md
+docs/storage/eva-overview.md
+
+docs/storage/zoning-policy.md
+
+docs/cluster/mscs-cluster.md
 
 ⚙️ 운영 핵심 절차
-
-반드시 순서를 지켜 주세요.
-
-전원 시퀀스
+5.1 전원 시퀀스
 
 기동: SAN → EVA → 서버
 
 종료: 서버 → EVA → SAN
 
-EVA 관리 접속 (Command View)
+5.2 EVA 관리 접속 (Command View)
 
-관리서버 → IE → http://127.0.0.1:2301 → 로그인
+관리서버 → IE → http://127.0.0.1:2301
 
 ⚠️ 기본 계정 즉시 변경 & 금고 관리
 
-LED 치트시트
+5.3 LED 치트시트
 
 DL580/DL360 Health: 🟢=정상 / 🟡=주의 / 🔴=위험
 
 NIC: 🟢=링크 / 깜빡임=트래픽 / 꺼짐=미연결
 
-📘 절차 상세: docs/operations/power-sequence.md
+자세한 절차: docs/operations/power-sequence.md
  · docs/hardware/led-cheatsheet.md
 
 🧪 예방점검 · 🛠️ 장애 대응
-
-체크리스트
+6.1 체크리스트
 
 ✅ 일일: 클러스터 이벤트, EVA/패스 알람, SAN 포트 에러, 주요 서비스 로그
 
@@ -84,48 +92,45 @@ NIC: 🟢=링크 / 깜빡임=트래픽 / 꺼짐=미연결
 
 📆 월간/분기: 펌웨어 검토, 구성 백업, 페일오버 리허설
 
-런북(예)
+6.2 런북(예)
 
 NIC 링크 불량 / HBA 경로 장애 / EVA 디스크 장애 / 클러스터 노드 다운
 
-📘 문서: docs/operations/maintenance-checklists.md
+문서: docs/operations/maintenance-checklists.md
  · docs/operations/incident-runbooks.md
 
 📦 인벤토리 & 도면 원본
-
-자산 & IPAM
-
+7.1 인벤토리
 python scripts/validate_inventory.py  # IP 형식/중복/정합 체크
 
 
 inventory/assets.yaml
  · inventory/ipam.csv
 
-도면 원본
+7.2 도면 원본
 
 diagrams/*.drawio, diagrams/*.mmd (렌더 png/svg 함께 보관)
 
-🧰 개발자/문서 워크플로
-<details> <summary><b>문서 사이트 (MkDocs, 선택)</b></summary>
+🧰 문서 사이트 & 협업
+8.1 문서 사이트(MkDocs, 선택)
 pip install mkdocs mkdocs-material
 mkdocs serve   # 로컬 미리보기
 mkdocs build   # /site 생성
 
 
-구성파일: mkdocs.yml
+구성: mkdocs.yml
 
-</details> <details> <summary><b>브랜치/PR 규칙</b></summary>
+8.2 브랜치/PR 규칙
 
 main 보호, 모든 변경은 feature/* → PR
 
-PR에는 영향도/롤백/테스트 필수
+PR에 영향도/롤백/테스트 필수
 
 커밋 접두: docs:, ops:, fix:, feat:, sec:, chore:
 
 변경 이력: CHANGELOG.md
  · 기여 규칙: CONTRIBUTING.md
 
-</details>
 🔒 보안 메모
 
 EVA/관리서버 등 기본 계정 즉시 변경, 분기 로테이션
