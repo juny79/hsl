@@ -75,6 +75,7 @@
 
 ```bash
 python scripts/validate_inventory.py
+```
 
 - 도면 원본: `diagrams/*.drawio`, `diagrams/*.mmd`  
   *(렌더본 `diagrams/*.png` 또는 `diagrams/*.svg`도 함께 보관)*
