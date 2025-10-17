@@ -1,0 +1,29 @@
+site_name: HSL Integrated Ops
+nav:
+  - Home: docs/index.md
+  - Overview:
+      - Summary: docs/overview/system-summary.md
+      - Topology: docs/overview/topology.md
+  - Hardware:
+      - Rack Layout: docs/hardware/rack-layout.md
+      - LED Cheatsheet: docs/hardware/led-cheatsheet.md
+  - Storage:
+      - EVA Overview: docs/storage/eva-overview.md
+      - Zoning Policy: docs/storage/zoning-policy.md
+      - Backup/Restore: docs/storage/backup-restore.md
+  - Cluster:
+      - MSCS: docs/cluster/mscs-cluster.md
+  - Operations:
+      - Power Sequence: docs/operations/power-sequence.md
+      - Checklists: docs/operations/maintenance-checklists.md
+      - Runbooks: docs/operations/incident-runbooks.md
+  - Security:
+      - Account/Password: docs/security/account-password-policy.md
+theme:
+  name: material
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences

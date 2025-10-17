@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Diagrams exports
+diagrams/*.png
+diagrams/*.svg
+
+# Python
+__pycache__/
+*.pyc
+
+# MkDocs site
+/site/

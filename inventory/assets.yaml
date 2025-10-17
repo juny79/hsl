@@ -1,0 +1,54 @@
+# 자산 인벤토리 (예시)
+servers:
+  - name: HSL-SVR-MAIN01
+    role: main
+    model: HP DL580 G3
+    ip: 10.145.91.11
+    gw: 10.145.91.1
+    os: Windows Server 2003 Standard
+  - name: HSL-SVR-MAIN02
+    role: main-backup
+    model: HP DL580 G3
+    ip: 10.145.91.12
+    gw: 10.145.91.1
+    os: Windows Server 2003 Standard
+  - name: HSL-SVR-DB01
+    role: db
+    model: HP DL580 G3
+    ip: 10.145.91.13
+    gw: 10.145.91.1
+    os: Windows Server 2003 Standard
+  - name: HSL-SVR-DB02
+    role: db-backup
+    model: HP DL580 G3
+    ip: 10.145.91.14
+    gw: 10.145.91.1
+    os: Windows Server 2003 Standard
+  - name: HSL-SVR-MEDIA01
+    role: media
+    model: HP DL580 G3
+    ip: 10.145.91.17
+    gw: 10.145.91.1
+    os: Windows Server 2003 Enterprise
+    hba_paths: 2
+storage:
+  model: HP EVA8000
+  disk_groups:
+    - name: DiskGroup1
+      level: vraid5
+      total_gb: 38177.16
+      used_gb: 36892.03
+      spare_policy: single
+    - name: DiskGroup2
+      level: vraid5
+      total_gb: 38177.16
+      used_gb: 36892.03
+      spare_policy: single
+san:
+  switches:
+    - model: HP StorageWorks 2/16V
+      ports: 16
+      fabric: A
+    - model: HP StorageWorks 2/16V
+      ports: 16
+      fabric: B
