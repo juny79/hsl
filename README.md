@@ -87,6 +87,7 @@ python scripts/validate_inventory.py
 ```bash
 pip install mkdocs mkdocs-material
 mkdocs serve
+```
 
 ### 6.2 빌드
 ```bash
