@@ -91,6 +91,7 @@ mkdocs serve
 ### 6.2 빌드
 ```bash
 mkdocs build
+```
 
 ### 6.3 협업 규칙
 - 브랜치/PR: `main` 보호 → `feature/*`에서 PR, **영향도/롤백/테스트** 필수
